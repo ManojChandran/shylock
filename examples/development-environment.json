@@ -1,0 +1,75 @@
+{
+  "version": "1.0",
+  "description": "Development and testing environment with minimal resources",
+  "resources": [
+    {
+      "type": "EC2",
+      "name": "dev-web-server",
+      "region": "us-west-2",
+      "properties": {
+        "instanceType": "t3.small",
+        "count": 1,
+        "operatingSystem": "Linux"
+      }
+    },
+    {
+      "type": "EC2",
+      "name": "test-server",
+      "region": "us-west-2",
+      "properties": {
+        "instanceType": "t3.micro",
+        "count": 1,
+        "operatingSystem": "Linux"
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "dev-database",
+      "region": "us-west-2",
+      "properties": {
+        "instanceClass": "db.t3.micro",
+        "engine": "postgres",
+        "storageGB": 20,
+        "multiAZ": false,
+        "encrypted": false
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "test-database",
+      "region": "us-west-2",
+      "properties": {
+        "instanceClass": "db.t3.micro",
+        "engine": "mysql",
+        "storageGB": 20,
+        "multiAZ": false,
+        "encrypted": false
+      }
+    },
+    {
+      "type": "S3",
+      "name": "dev-assets",
+      "region": "us-west-2",
+      "properties": {
+        "storageClass": "STANDARD",
+        "sizeGB": 10,
+        "requestsPerMonth": 10000
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "dev-functions",
+      "region": "us-west-2",
+      "properties": {
+        "memoryMB": 256,
+        "requestsPerMonth": 100000,
+        "averageDurationMs": 500,
+        "architecture": "arm64"
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

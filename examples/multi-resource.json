@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "EC2",
+      "name": "web-server",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "t3.small",
+        "count": 2,
+        "operatingSystem": "Linux"
+      }
+    },
+    {
+      "type": "S3",
+      "name": "data-bucket",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "STANDARD",
+        "sizeGB": 500,
+        "requestsPerMonth": 10000
+      }
+    },
+    {
+      "type": "ALB",
+      "name": "web-load-balancer",
+      "region": "us-east-1",
+      "properties": {
+        "type": "application",
+        "dataProcessingGB": 50,
+        "newConnectionsPerSecond": 25,
+        "activeConnectionsPerMinute": 1500,
+        "ruleEvaluations": 500
+      }
+    }
+  ],
+  "options": {
+    "defaultRegion": "us-east-1",
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

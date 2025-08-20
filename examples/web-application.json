@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "description": "Complete web application architecture with load balancer, web servers, database, and storage",
+  "resources": [
+    {
+      "type": "ALB",
+      "name": "web-load-balancer",
+      "region": "us-east-1",
+      "properties": {
+        "type": "application",
+        "dataProcessingGB": 150,
+        "newConnectionsPerSecond": 75,
+        "activeConnectionsPerMinute": 3000,
+        "ruleEvaluations": 1500
+      }
+    },
+    {
+      "type": "EC2",
+      "name": "web-servers",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "t3.medium",
+        "count": 3,
+        "operatingSystem": "Linux"
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "primary-database",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.r5.large",
+        "engine": "postgres",
+        "storageGB": 200,
+        "multiAZ": true,
+        "encrypted": true,
+        "storageType": "gp2"
+      }
+    },
+    {
+      "type": "S3",
+      "name": "static-assets",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "STANDARD",
+        "sizeGB": 50,
+        "requestsPerMonth": 2000000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "user-uploads",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "STANDARD_IA",
+        "sizeGB": 500,
+        "requestsPerMonth": 100000
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

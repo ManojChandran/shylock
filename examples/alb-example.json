@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "ALB",
+      "name": "web-app-lb",
+      "region": "us-east-1",
+      "properties": {
+        "type": "application",
+        "dataProcessingGB": 100,
+        "newConnectionsPerSecond": 50,
+        "activeConnectionsPerMinute": 2000,
+        "ruleEvaluations": 1000
+      }
+    },
+    {
+      "type": "ALB",
+      "name": "api-network-lb",
+      "region": "us-west-2",
+      "properties": {
+        "type": "network",
+        "dataProcessingGB": 500,
+        "newConnectionsPerSecond": 200,
+        "activeConnectionsPerMinute": 10000
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

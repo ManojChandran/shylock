@@ -1,0 +1,178 @@
+# GoReleaser configuration for Shylock AWS Cost Estimation Tool
+# This configuration enables cross-platform builds and releases
+
+# Project metadata
+project_name: shylock
+
+# Before hooks - run tests and clean up
+before:
+  hooks:
+    - go mod tidy
+    - go test ./...
+
+# Build configuration
+builds:
+  - id: shylock
+    main: ./main.go
+    binary: shylock
+    
+    # Environment variables for the build
+    env:
+      - CGO_ENABLED=0
+    
+    # Target platforms and architectures
+    goos:
+      - linux
+      - windows
+      - darwin
+    
+    goarch:
+      - amd64
+      - arm64
+    
+    # Ignore combinations that don't make sense
+    ignore:
+      - goos: windows
+        goarch: arm64
+    
+    # Build flags and ldflags for optimization
+    flags:
+      - -trimpath
+    
+    ldflags:
+      - -s -w
+      - -X shylock/internal/version.Version={{.Version}}
+      - -X shylock/internal/version.Commit={{.Commit}}
+      - -X shylock/internal/version.Date={{.Date}}
+      - -X shylock/internal/version.BuiltBy=goreleaser
+
+# Archive configuration
+archives:
+  - id: shylock-archive
+    builds:
+      - shylock
+    
+    # Archive name template
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    
+    # Use rlcp (replace line copy) for better performance
+    rlcp: true
+    
+    # Include additional files in the archive
+    files:
+      - README.md
+      - LICENSE
+      - docs/**/*
+      - examples/**/*
+    
+    # Format by OS
+    format_overrides:
+      - goos: windows
+        format: zip
+      - goos: darwin
+        format: tar.gz
+      - goos: linux
+        format: tar.gz
+
+# Checksum configuration
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+  algorithm: sha256
+
+# Snapshot configuration for development builds
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+# Changelog configuration
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^ci:"
+      - "^chore:"
+      - "^style:"
+      - "^refactor:"
+      - "merge conflict"
+      - Merge pull request
+      - Merge remote-tracking branch
+      - Merge branch
+  groups:
+    - title: Features
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 1
+    - title: 'Performance improvements'
+      regexp: "^.*perf[(\\w)]*:+.*$"
+      order: 2
+    - title: Others
+      order: 999
+
+# Release configuration
+release:
+  # Repository will be auto-detected from git remote
+  
+  # Release name template
+  name_template: "Shylock v{{ .Version }}"
+  
+  # Mark as prerelease for development versions
+  prerelease: auto
+  
+  # Release notes
+  header: |
+    ## Shylock {{ .Tag }} ({{ .Date }})
+    
+    AWS Cost Estimation Tool - Cross-platform release for Linux, macOS, and Windows.
+    
+    ### Installation
+    
+    #### Linux/macOS (Homebrew)
+    ```bash
+    # Coming soon - Homebrew tap
+    brew install shylock
+    ```
+    
+    #### Manual Installation
+    1. Download the appropriate archive for your platform below
+    2. Extract the archive
+    3. Move the `shylock` binary to your PATH
+    
+    #### Quick Start
+    ```bash
+    # Validate configuration
+    ./shylock validate examples/simple-ec2.json
+    
+    # Estimate costs
+    ./shylock estimate examples/simple-ec2.json
+    
+    # List supported services
+    ./shylock list
+    ```
+  
+  footer: |
+    ### Checksums
+    
+    All binaries are signed and checksums are provided above.
+    
+    ### Documentation
+    
+    - [Installation Guide](docs/INSTALLATION.md)
+    - [User Guide](docs/USER_GUIDE.md)
+    - [Examples](examples/)
+    
+    **Full Changelog**: {{ .ReleaseURL }}/compare/{{ .PreviousTag }}...{{ .Tag }}
+
+# Package manager configurations can be added later
+# See docs/RELEASE.md for instructions on setting up Homebrew and Scoop
+
+# Docker configuration can be added later
+# See docs/RELEASE.md for instructions on setting up Docker builds
+
+# Announce configuration (optional)
+announce:
+  # Skip announcement for now
+  skip: true

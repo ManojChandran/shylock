@@ -1,0 +1,39 @@
+# Dockerfile for GoReleaser builds
+# This creates a minimal container image for Shylock
+
+FROM alpine:latest
+
+# Install ca-certificates for HTTPS requests to AWS APIs
+RUN apk --no-cache add ca-certificates tzdata
+
+# Create non-root user for security
+RUN adduser -D -s /bin/sh shylock
+
+# Set working directory
+WORKDIR /home/shylock
+
+# Copy the binary from GoReleaser
+COPY shylock /usr/local/bin/shylock
+
+# Copy documentation and examples
+COPY README.md /home/shylock/
+COPY docs/ /home/shylock/docs/
+COPY examples/ /home/shylock/examples/
+
+# Change ownership to non-root user
+RUN chown -R shylock:shylock /home/shylock
+
+# Switch to non-root user
+USER shylock
+
+# Set entrypoint
+ENTRYPOINT ["/usr/local/bin/shylock"]
+
+# Default command
+CMD ["--help"]
+
+# Metadata
+LABEL org.opencontainers.image.title="Shylock"
+LABEL org.opencontainers.image.description="AWS cost estimation tool for infrastructure planning"
+LABEL org.opencontainers.image.vendor="Shylock Project"
+LABEL org.opencontainers.image.licenses="MIT"

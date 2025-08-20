@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "Lambda",
+      "name": "simple-function",
+      "region": "us-east-1",
+      "properties": {
+        "memoryMB": 512,
+        "requestsPerMonth": 1000000,
+        "averageDurationMs": 100,
+        "architecture": "arm64"
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

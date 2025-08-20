@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "ALB",
+      "name": "simple-app-lb",
+      "region": "us-east-1",
+      "properties": {
+        "type": "application"
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "version": "1.0",
+  "description": "Data analytics platform with compute instances, databases, and storage tiers",
+  "resources": [
+    {
+      "type": "EC2",
+      "name": "analytics-cluster",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "c5.4xlarge",
+        "count": 5,
+        "operatingSystem": "Linux"
+      }
+    },
+    {
+      "type": "EC2",
+      "name": "data-ingestion-servers",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "m5.2xlarge",
+        "count": 3,
+        "operatingSystem": "Linux"
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "metadata-database",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.r5.2xlarge",
+        "engine": "postgres",
+        "storageGB": 1000,
+        "multiAZ": true,
+        "encrypted": true,
+        "storageType": "gp2"
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "analytics-warehouse",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.r5.8xlarge",
+        "engine": "postgres",
+        "storageGB": 5000,
+        "multiAZ": false,
+        "encrypted": true,
+        "storageType": "gp2"
+      }
+    },
+    {
+      "type": "S3",
+      "name": "raw-data-lake",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "STANDARD",
+        "sizeGB": 50000,
+        "requestsPerMonth": 10000000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "processed-data",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "STANDARD_IA",
+        "sizeGB": 20000,
+        "requestsPerMonth": 1000000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "archived-data",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "GLACIER",
+        "sizeGB": 100000,
+        "requestsPerMonth": 10000
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "data-transformation",
+      "region": "us-east-1",
+      "properties": {
+        "memoryMB": 3008,
+        "requestsPerMonth": 1000000,
+        "averageDurationMs": 10000,
+        "storageGB": 10,
+        "architecture": "x86_64"
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

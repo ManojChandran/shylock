@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "S3",
+      "name": "standard-bucket",
+      "region": "us-west-2",
+      "properties": {
+        "storageClass": "STANDARD",
+        "sizeGB": 1000,
+        "requestsPerMonth": 50000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "archive-bucket",
+      "region": "us-west-2",
+      "properties": {
+        "storageClass": "GLACIER",
+        "sizeGB": 10000,
+        "requestsPerMonth": 100
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

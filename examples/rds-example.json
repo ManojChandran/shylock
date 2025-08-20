@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "RDS",
+      "name": "mysql-production",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.r5.large",
+        "engine": "mysql",
+        "storageGB": 100,
+        "multiAZ": true,
+        "encrypted": true,
+        "storageType": "gp2"
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "postgres-dev",
+      "region": "us-west-2",
+      "properties": {
+        "instanceClass": "db.t3.micro",
+        "engine": "postgres",
+        "storageGB": 20,
+        "multiAZ": false,
+        "encrypted": false
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

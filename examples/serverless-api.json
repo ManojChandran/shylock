@@ -1,0 +1,76 @@
+{
+  "version": "1.0",
+  "description": "Serverless API architecture with Lambda functions, ALB, and S3 storage",
+  "resources": [
+    {
+      "type": "ALB",
+      "name": "api-gateway-alb",
+      "region": "us-west-2",
+      "properties": {
+        "type": "application",
+        "dataProcessingGB": 80,
+        "newConnectionsPerSecond": 40,
+        "activeConnectionsPerMinute": 1200,
+        "ruleEvaluations": 800
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "auth-service",
+      "region": "us-west-2",
+      "properties": {
+        "memoryMB": 512,
+        "requestsPerMonth": 3000000,
+        "averageDurationMs": 150,
+        "architecture": "arm64"
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "user-service",
+      "region": "us-west-2",
+      "properties": {
+        "memoryMB": 1024,
+        "requestsPerMonth": 2000000,
+        "averageDurationMs": 300,
+        "architecture": "arm64"
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "data-processor",
+      "region": "us-west-2",
+      "properties": {
+        "memoryMB": 2048,
+        "requestsPerMonth": 500000,
+        "averageDurationMs": 5000,
+        "storageGB": 5,
+        "architecture": "x86_64"
+      }
+    },
+    {
+      "type": "S3",
+      "name": "api-data-storage",
+      "region": "us-west-2",
+      "properties": {
+        "storageClass": "STANDARD",
+        "sizeGB": 1000,
+        "requestsPerMonth": 5000000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "processed-data-archive",
+      "region": "us-west-2",
+      "properties": {
+        "storageClass": "GLACIER",
+        "sizeGB": 5000,
+        "requestsPerMonth": 1000
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

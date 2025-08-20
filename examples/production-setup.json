@@ -1,0 +1,75 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "ALB",
+      "name": "production-alb",
+      "region": "us-east-1",
+      "properties": {
+        "type": "application",
+        "dataProcessingGB": 500,
+        "newConnectionsPerSecond": 200,
+        "activeConnectionsPerMinute": 5000,
+        "ruleEvaluations": 2000
+      }
+    },
+    {
+      "type": "EC2",
+      "name": "web-servers",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "m5.large",
+        "count": 4,
+        "operatingSystem": "Linux"
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "production-db",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.r5.xlarge",
+        "engine": "postgres",
+        "storageGB": 1000,
+        "storageType": "gp2",
+        "multiAZ": true,
+        "encrypted": true
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "api-functions",
+      "region": "us-east-1",
+      "properties": {
+        "memoryMB": 1024,
+        "requestsPerMonth": 10000000,
+        "averageDurationMs": 250,
+        "architecture": "arm64"
+      }
+    },
+    {
+      "type": "S3",
+      "name": "application-data",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "STANDARD",
+        "sizeGB": 5000,
+        "requestsPerMonth": 2000000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "backup-storage",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "GLACIER",
+        "sizeGB": 50000,
+        "requestsPerMonth": 500
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

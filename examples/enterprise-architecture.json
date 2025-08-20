@@ -1,0 +1,187 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "ALB",
+      "name": "public-load-balancer",
+      "region": "us-east-1",
+      "properties": {
+        "type": "application",
+        "dataProcessingGB": 1000,
+        "newConnectionsPerSecond": 500,
+        "activeConnectionsPerMinute": 15000,
+        "ruleEvaluations": 5000
+      }
+    },
+    {
+      "type": "ALB",
+      "name": "internal-load-balancer",
+      "region": "us-east-1",
+      "properties": {
+        "type": "network",
+        "dataProcessingGB": 2000,
+        "newConnectionsPerSecond": 1000,
+        "activeConnectionsPerMinute": 50000
+      }
+    },
+    {
+      "type": "EC2",
+      "name": "web-tier-servers",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "c5.xlarge",
+        "count": 6,
+        "operatingSystem": "Linux",
+        "tenancy": "Shared"
+      }
+    },
+    {
+      "type": "EC2",
+      "name": "app-tier-servers",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "m5.2xlarge",
+        "count": 4,
+        "operatingSystem": "Linux",
+        "tenancy": "Shared"
+      }
+    },
+    {
+      "type": "EC2",
+      "name": "background-workers",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "r5.large",
+        "count": 3,
+        "operatingSystem": "Linux"
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "primary-database",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.r5.4xlarge",
+        "engine": "postgres",
+        "storageGB": 2000,
+        "storageType": "gp2",
+        "multiAZ": true,
+        "encrypted": true
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "read-replica-1",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.r5.2xlarge",
+        "engine": "postgres",
+        "storageGB": 2000,
+        "storageType": "gp2",
+        "multiAZ": false,
+        "encrypted": true
+      }
+    },
+    {
+      "type": "RDS",
+      "name": "analytics-database",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.r5.xlarge",
+        "engine": "mysql",
+        "storageGB": 5000,
+        "storageType": "gp2",
+        "multiAZ": true,
+        "encrypted": true
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "api-gateway-functions",
+      "region": "us-east-1",
+      "properties": {
+        "memoryMB": 1024,
+        "requestsPerMonth": 50000000,
+        "averageDurationMs": 150,
+        "architecture": "arm64"
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "data-processing-functions",
+      "region": "us-east-1",
+      "properties": {
+        "memoryMB": 3008,
+        "requestsPerMonth": 5000000,
+        "averageDurationMs": 10000,
+        "architecture": "x86_64",
+        "storageGB": 5
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "scheduled-jobs",
+      "region": "us-east-1",
+      "properties": {
+        "memoryMB": 512,
+        "requestsPerMonth": 500000,
+        "averageDurationMs": 30000,
+        "architecture": "arm64"
+      }
+    },
+    {
+      "type": "S3",
+      "name": "application-assets",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "STANDARD",
+        "sizeGB": 10000,
+        "requestsPerMonth": 10000000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "user-uploads",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "STANDARD_IA",
+        "sizeGB": 50000,
+        "requestsPerMonth": 2000000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "data-lake",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "INTELLIGENT_TIERING",
+        "sizeGB": 500000,
+        "requestsPerMonth": 100000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "backup-archive",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "GLACIER",
+        "sizeGB": 1000000,
+        "requestsPerMonth": 1000
+      }
+    },
+    {
+      "type": "S3",
+      "name": "long-term-archive",
+      "region": "us-east-1",
+      "properties": {
+        "storageClass": "DEEP_ARCHIVE",
+        "sizeGB": 5000000,
+        "requestsPerMonth": 100
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

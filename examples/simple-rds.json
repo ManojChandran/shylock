@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "RDS",
+      "name": "simple-database",
+      "region": "us-east-1",
+      "properties": {
+        "instanceClass": "db.t3.micro",
+        "engine": "postgres",
+        "storageGB": 20,
+        "multiAZ": false
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

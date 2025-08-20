@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "EC2",
+      "name": "web-server",
+      "region": "us-east-1",
+      "properties": {
+        "instanceType": "t3.micro",
+        "count": 1,
+        "operatingSystem": "Linux"
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}

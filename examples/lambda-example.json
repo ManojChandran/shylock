@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "type": "Lambda",
+      "name": "api-handler",
+      "region": "us-east-1",
+      "properties": {
+        "memoryMB": 512,
+        "requestsPerMonth": 5000000,
+        "averageDurationMs": 200,
+        "architecture": "arm64"
+      }
+    },
+    {
+      "type": "Lambda",
+      "name": "data-processor",
+      "region": "us-west-2",
+      "properties": {
+        "memoryMB": 1024,
+        "requestsPerMonth": 100000,
+        "averageDurationMs": 5000,
+        "storageGB": 10,
+        "architecture": "x86_64"
+      }
+    }
+  ],
+  "options": {
+    "currency": "USD",
+    "timeFrame": "monthly"
+  }
+}
